@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Animator animator;
 
     [Header("Input Settings")]
     [SerializeField] private float moveInput;
@@ -29,6 +30,8 @@ public class Player : MonoBehaviour
         {
             Flip();
         }
+
+        HandleAnimations();
     }
 
     void FixedUpdate()
@@ -49,6 +52,12 @@ public class Player : MonoBehaviour
         {
             rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
         }
+    }
+
+    void HandleAnimations()
+    {
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
+        animator.SetBool("isJumping", rb.linearVelocity.y > 0.1f);
     }
 
     void Flip()
